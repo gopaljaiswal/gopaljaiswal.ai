@@ -1,10 +1,10 @@
 import { logos } from "@/data/logos";
 
-export function LogoCloud() {
+export function LogoCloud({ compact = false }: { compact?: boolean }) {
   const track = [...logos, ...logos];
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <section className={`mx-auto max-w-6xl px-4 sm:px-6 ${compact ? "py-8" : "py-16"}`}>
       <p className="mb-6 text-center text-sm font-medium text-muted-foreground">
         Mentees now at
       </p>
