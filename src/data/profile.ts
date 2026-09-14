@@ -1,9 +1,27 @@
 export const profile = {
   name: "Gopal Jaiswal",
   title: "Senior Software Engineer · Microsoft",
+  location: "Hyderabad, India",
   // TODO: replace with your real tagline
   tagline: "Helping engineers think, design, and communicate at the next level.",
-  // TODO: replace with your real bio (2-3 sentences)
-  bio: "I am Gopal Jaiswal, a Senior Software Engineer at Microsoft. TODO: add a short paragraph about your background, the kind of systems you build, and what you help engineers with.",
+  // Pulled from your LinkedIn public profile — refine the phrasing as you like.
+  bio: "I am Gopal Jaiswal, a Senior Software Engineer at Microsoft, based in Hyderabad. I work across distributed systems, microservices, and large-scale backend infrastructure — Java, Spring, Kafka, Spark, and multithreaded, highly concurrent systems. TODO: add a sentence on what you help engineers with (interview prep, design reviews, mentorship, etc.).",
   initials: "GJ",
 };
+
+// Pulled from your LinkedIn public profile.
+export const education = {
+  school: "National Institute of Technology, Nagaland",
+  years: "2012 – 2016",
+  detail: "Technical Secretary, Computer Science & Engineering",
+};
+
+// Pulled from your LinkedIn public profile — trim/expand as you like.
+export const certifications: string[] = [
+  "Microservices: Designing Highly Scalable Systems",
+  "Java Multithreading, Concurrency & Performance Optimization",
+  "Spring Framework for Beginners with Spring Boot",
+  "Java OOP: OOPS, OOAD & Design Patterns",
+  "Apache Kafka Series",
+  "Apache Spark",
+];

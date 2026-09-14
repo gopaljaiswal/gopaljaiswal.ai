@@ -10,7 +10,7 @@ import type { Offering } from "@/data/offerings";
 
 export function OfferingCard({ number, title, description, meta, ctaLabel, ctaHref }: Offering) {
   return (
-    <Card className="h-full gap-4 border-border/70 py-6">
+    <Card className="card-interactive h-full gap-4 border-border/70 py-6">
       <CardHeader>
         <span className="font-heading text-sm text-muted-foreground">{number}</span>
         <h3 className="font-heading text-lg font-medium tracking-tight">{title}</h3>

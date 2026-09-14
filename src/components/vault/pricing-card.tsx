@@ -11,7 +11,7 @@ export function PricingCard() {
   const domainCount = new Set(vaultQuestions.map((q) => q.domain)).size;
 
   return (
-    <Card className="border-border/70 py-6">
+    <Card className="border-primary/30 py-6 shadow-[0_30px_60px_-32px_oklch(0.6_0.19_259/50%)]">
       <CardHeader>
         <Badge variant="secondary" className="w-fit">
           Lifetime access

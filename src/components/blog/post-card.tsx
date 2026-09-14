@@ -6,7 +6,7 @@ import type { PostSummary } from "@/lib/blog";
 export function PostCard({ post }: { post: PostSummary }) {
   return (
     <Link href={`/blog/${post.slug}`} className="block h-full">
-      <Card className="h-full border-border/70 py-6 transition-colors hover:border-primary/50">
+      <Card className="card-interactive h-full border-border/70 py-6">
         <CardHeader>
           <p className="text-xs text-muted-foreground">
             {post.date} · {post.readingTime}
