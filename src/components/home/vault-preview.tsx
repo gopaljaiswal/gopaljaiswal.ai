@@ -7,7 +7,11 @@ export function VaultPreview() {
   const preview = vaultQuestions.slice(0, 4);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <section className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-24 top-10 -z-10 h-[300px] w-[300px] rounded-full bg-[color-mix(in_oklch,var(--brand-to)_30%,transparent)] blur-[110px]"
+      />
       <div className="mb-8 flex items-end justify-between">
         <div>
           <p className="text-sm font-medium text-primary">Inside the vault</p>

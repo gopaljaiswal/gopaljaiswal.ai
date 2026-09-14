@@ -1,11 +1,17 @@
 import { Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import type { VaultQuestion } from "@/data/vault";
+import type { Difficulty, VaultQuestion } from "@/data/vault";
+
+const difficultyStyles: Record<Difficulty, string> = {
+  Fundamental: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
+  Intermediate: "border-amber-500/30 bg-amber-500/10 text-amber-400",
+  Advanced: "border-rose-500/30 bg-rose-500/10 text-rose-400",
+};
 
 export function VaultQuestionCard({ question, difficulty, domain, teaser, answer, locked, id }: VaultQuestion) {
   return (
-    <Card className="border-border/70 py-5">
+    <Card className="card-interactive border-border/70 py-5">
       <CardHeader className="flex-row items-start justify-between gap-3">
         <div>
           <p className="text-xs text-muted-foreground">{id}</p>
@@ -14,14 +20,14 @@ export function VaultQuestionCard({ question, difficulty, domain, teaser, answer
         {locked ? (
           <Lock className="size-4 shrink-0 text-muted-foreground" />
         ) : (
-          <Badge className="shrink-0" variant="secondary">
-            Open free
-          </Badge>
+          <Badge className="bg-gradient-brand shrink-0 border-0 text-white">Open free</Badge>
         )}
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex flex-wrap gap-2">
-          <Badge variant="outline">{difficulty}</Badge>
+          <Badge className={difficultyStyles[difficulty]} variant="outline">
+            {difficulty}
+          </Badge>
           <Badge variant="outline">{domain}</Badge>
         </div>
 
