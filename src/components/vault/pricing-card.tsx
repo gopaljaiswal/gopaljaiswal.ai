@@ -11,7 +11,7 @@ export function PricingCard() {
   const domainCount = new Set(vaultQuestions.map((q) => q.domain)).size;
 
   return (
-    <Card className="border-primary/30 py-6 shadow-[0_30px_60px_-32px_oklch(0.6_0.19_259/50%)]">
+    <Card className="border-primary/30 py-6 shadow-[0_30px_60px_-32px_color-mix(in_oklch,var(--brand-from)_50%,transparent)]">
       <CardHeader>
         <Badge variant="secondary" className="w-fit">
           Lifetime access
@@ -50,7 +50,7 @@ export function PricingCard() {
 
         <div className="flex flex-col gap-2 sm:flex-row">
           <Button
-            className="flex-1"
+            className="bg-gradient-brand flex-1 border-0 text-white hover:opacity-90"
             render={<Link href={links.topmate} target="_blank" rel="noreferrer" />}
           >
             Get lifetime access

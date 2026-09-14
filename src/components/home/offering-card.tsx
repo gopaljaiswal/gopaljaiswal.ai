@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Library, Mic, Compass, PenLine } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -8,12 +8,21 @@ import {
 import { Badge } from "@/components/ui/badge";
 import type { Offering } from "@/data/offerings";
 
-export function OfferingCard({ number, title, description, meta, ctaLabel, ctaHref }: Offering) {
+const icons = { Library, Mic, Compass, PenLine };
+
+export function OfferingCard({ number, icon, title, description, meta, ctaLabel, ctaHref }: Offering) {
+  const Icon = icons[icon];
+
   return (
     <Card className="card-interactive h-full gap-4 border-border/70 py-6">
       <CardHeader>
-        <span className="font-heading text-sm text-muted-foreground">{number}</span>
-        <h3 className="font-heading text-lg font-medium tracking-tight">{title}</h3>
+        <div className="flex items-center justify-between">
+          <span className="bg-gradient-brand flex size-9 items-center justify-center rounded-lg text-white">
+            <Icon className="size-4" />
+          </span>
+          <span className="text-gradient-brand font-heading text-sm font-semibold">{number}</span>
+        </div>
+        <h3 className="mt-2 font-heading text-lg font-medium tracking-tight">{title}</h3>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col justify-between gap-5">
         <div>

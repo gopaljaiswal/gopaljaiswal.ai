@@ -1,5 +1,8 @@
+export type OfferingIcon = "Library" | "Mic" | "Compass" | "PenLine";
+
 export type Offering = {
   number: string;
+  icon: OfferingIcon;
   title: string;
   description: string;
   meta: string[];
@@ -10,6 +13,7 @@ export type Offering = {
 export const offerings: Offering[] = [
   {
     number: "01",
+    icon: "Library",
     title: "System Design & Engineering Vault",
     description:
       "A growing set of answers to the questions senior and staff interviews actually turn on: framing, trade-offs, failure modes, and the language to explain them.",
@@ -19,6 +23,7 @@ export const offerings: Offering[] = [
   },
   {
     number: "02",
+    icon: "Mic",
     title: "Mock Interviews",
     description:
       "Live 1:1 mock interviews across formats — system design, DSA/LLD, behavioural, and monthly deep-dives.",
@@ -28,6 +33,7 @@ export const offerings: Offering[] = [
   },
   {
     number: "03",
+    icon: "Compass",
     title: "Career Mentorship",
     description:
       "Ongoing 1:1 guidance on levelling up, interview strategy, and career decisions — tailored to where you are today.",
@@ -37,6 +43,7 @@ export const offerings: Offering[] = [
   },
   {
     number: "04",
+    icon: "PenLine",
     title: "Essays",
     description:
       "Free, long-form writing on engineering, system design, and career growth.",
