@@ -1,9 +1,18 @@
-// TODO: replace every URL below with your real link before launch.
-export const links = {
-  topmate: "https://topmate.io/your_handle",
-  calendly: "https://calendly.com/your_handle",
-  linkedin: "https://linkedin.com/in/your_handle",
-  twitter: "https://twitter.com/your_handle",
-  substack: "https://your_handle.substack.com",
-  email: "mailto:you@example.com",
-};
+import { z } from "zod";
+import { getContent } from "@/lib/content";
+
+export const linksSchema = z.object({
+  topmate: z.string().min(1),
+  calendly: z.string().min(1),
+  linkedin: z.string().min(1),
+  twitter: z.string().min(1),
+  substack: z.string().min(1),
+  email: z.string().min(1),
+});
+export type Links = z.infer<typeof linksSchema>;
+
+export async function getLinks(): Promise<Links> {
+  const data = await getContent<Links>("links");
+  if (!data) throw new Error("links content not seeded");
+  return data;
+}

@@ -1,27 +1,32 @@
-export const profile = {
-  name: "Gopal Jaiswal",
-  title: "Senior Software Engineer · Microsoft",
-  location: "Hyderabad, India",
-  // TODO: replace with your real tagline
-  tagline: "Helping engineers think, design, and communicate at the next level.",
-  // Pulled from your LinkedIn public profile — refine the phrasing as you like.
-  bio: "I am Gopal Jaiswal, a Senior Software Engineer at Microsoft, based in Hyderabad. I work across distributed systems, microservices, and large-scale backend infrastructure — Java, Spring, Kafka, Spark, and multithreaded, highly concurrent systems. TODO: add a sentence on what you help engineers with (interview prep, design reviews, mentorship, etc.).",
-  initials: "GJ",
-};
+import { z } from "zod";
+import { getContent } from "@/lib/content";
 
-// Pulled from your LinkedIn public profile.
-export const education = {
-  school: "National Institute of Technology, Nagaland",
-  years: "2012 – 2016",
-  detail: "Technical Secretary, Computer Science & Engineering",
-};
+export const profileSchema = z.object({
+  name: z.string().min(1),
+  title: z.string().min(1),
+  location: z.string().optional(),
+  tagline: z.string().min(1),
+  bio: z.string().min(1),
+  initials: z.string().min(1).max(4),
+});
+export type Profile = z.infer<typeof profileSchema>;
 
-// Pulled from your LinkedIn public profile — trim/expand as you like.
-export const certifications: string[] = [
-  "Microservices: Designing Highly Scalable Systems",
-  "Java Multithreading, Concurrency & Performance Optimization",
-  "Spring Framework for Beginners with Spring Boot",
-  "Java OOP: OOPS, OOAD & Design Patterns",
-  "Apache Kafka Series",
-  "Apache Spark",
-];
+export const educationSchema = z.object({
+  school: z.string().min(1),
+  years: z.string().min(1),
+  detail: z.string().min(1),
+});
+export type Education = z.infer<typeof educationSchema>;
+
+export const profileContentSchema = z.object({
+  profile: profileSchema,
+  education: educationSchema,
+  certifications: z.array(z.string()),
+});
+export type ProfileContent = z.infer<typeof profileContentSchema>;
+
+export async function getProfileContent(): Promise<ProfileContent> {
+  const data = await getContent<ProfileContent>("profile");
+  if (!data) throw new Error("profile content not seeded");
+  return data;
+}

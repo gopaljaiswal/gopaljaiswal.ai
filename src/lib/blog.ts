@@ -1,63 +1,39 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { z } from "zod";
 import readingTime from "reading-time";
+import { getContent } from "@/lib/content";
 
-const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
+export const blogPostSchema = z.object({
+  slug: z.string().min(1),
+  title: z.string().min(1),
+  date: z.string().min(1),
+  excerpt: z.string().min(1),
+  tags: z.array(z.string()),
+  content: z.string().min(1),
+});
+export type BlogPost = z.infer<typeof blogPostSchema>;
 
-export type PostFrontmatter = {
-  title: string;
-  date: string;
-  excerpt: string;
-  tags: string[];
-};
+export type PostSummary = Omit<BlogPost, "content"> & { readingTime: string };
 
-export type PostSummary = PostFrontmatter & {
-  slug: string;
-  readingTime: string;
-};
-
-function slugFromFilename(filename: string) {
-  return filename.replace(/\.mdx$/, "");
+async function getAllBlogPosts(): Promise<BlogPost[]> {
+  const data = await getContent<BlogPost[]>("blogPosts");
+  return data ?? [];
 }
 
-export function getAllPosts(): PostSummary[] {
-  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".mdx"));
-
-  const posts = files.map((filename) => {
-    const raw = fs.readFileSync(path.join(BLOG_DIR, filename), "utf8");
-    const { data, content } = matter(raw);
-    const frontmatter = data as PostFrontmatter;
-
-    return {
-      ...frontmatter,
-      slug: slugFromFilename(filename),
-      readingTime: readingTime(content).text,
-    };
-  });
-
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+export async function getAllPosts(): Promise<PostSummary[]> {
+  const posts = await getAllBlogPosts();
+  return posts
+    .map(({ content, ...rest }) => ({ ...rest, readingTime: readingTime(content).text }))
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function getPostBySlug(slug: string) {
-  const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
-
-  const raw = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(raw);
-  const frontmatter = data as PostFrontmatter;
-
-  return {
-    ...frontmatter,
-    slug,
-    content,
-    readingTime: readingTime(content).text,
-  };
+export async function getPostBySlug(slug: string) {
+  const posts = await getAllBlogPosts();
+  const post = posts.find((p) => p.slug === slug);
+  if (!post) return null;
+  return { ...post, readingTime: readingTime(post.content).text };
 }
 
-export function getAllSlugs(): string[] {
-  return fs
-    .readdirSync(BLOG_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map(slugFromFilename);
+export async function getAllSlugs(): Promise<string[]> {
+  const posts = await getAllBlogPosts();
+  return posts.map((p) => p.slug);
 }

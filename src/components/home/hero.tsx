@@ -3,10 +3,15 @@ import { MapPin, Sparkles } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { profile, education, certifications } from "@/data/profile";
-import { links } from "@/data/links";
+import { getProfileContent } from "@/data/profile";
+import { getLinks } from "@/data/links";
 
-export function Hero() {
+export async function Hero() {
+  const [{ profile, education, certifications }, links] = await Promise.all([
+    getProfileContent(),
+    getLinks(),
+  ]);
+
   return (
     <section className="relative overflow-hidden">
       <div aria-hidden className="bg-grid-fade pointer-events-none absolute inset-0 -z-20" />

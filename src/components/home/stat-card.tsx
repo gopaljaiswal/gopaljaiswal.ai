@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Star, Users, CalendarCheck, Building2, GraduationCap, Trophy } from "lucide-react";
+import { Star, Quote, CalendarCheck, Building2, GraduationCap, Trophy } from "lucide-react";
 import type { Stat } from "@/data/stats";
 
-const icons = { Star, Users, CalendarCheck, Building2, GraduationCap, Trophy };
+const icons = { Star, Quote, CalendarCheck, Building2, GraduationCap, Trophy };
 
 export function StatCard({ icon, label, value, href }: Stat) {
   const Icon = icons[icon];

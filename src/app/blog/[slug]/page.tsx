@@ -3,17 +3,18 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import { mdxComponents } from "@/components/blog/mdx-components";
-import { profile } from "@/data/profile";
+import { getProfileContent } from "@/data/profile";
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const [post, { profile }] = await Promise.all([getPostBySlug(slug), getProfileContent()]);
   if (!post) return {};
 
   return {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Params) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) notFound();
 
   return (

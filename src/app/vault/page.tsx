@@ -3,13 +3,17 @@ import { PricingCard } from "@/components/vault/pricing-card";
 import { DomainChart } from "@/components/vault/domain-chart";
 import { VaultQuestionList } from "@/components/vault/vault-question-list";
 import { Reveal } from "@/components/reveal";
-import { profile } from "@/data/profile";
+import { getProfileContent } from "@/data/profile";
+import { getVaultContent } from "@/data/vault";
 
-export const metadata: Metadata = {
-  title: `Resource Vault — ${profile.name}`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getProfileContent();
+  return { title: `Resource Vault — ${profile.name}` };
+}
 
-export default function VaultPage() {
+export default async function VaultPage() {
+  const { vaultQuestions } = await getVaultContent();
+
   return (
     <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div
@@ -44,7 +48,7 @@ export default function VaultPage() {
 
       <div id="vault-questions" className="scroll-mt-24 pt-8">
         <h2 className="mb-6 font-heading text-xl tracking-tight">Every question</h2>
-        <VaultQuestionList />
+        <VaultQuestionList questions={vaultQuestions} />
       </div>
     </div>
   );

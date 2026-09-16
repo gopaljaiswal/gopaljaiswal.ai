@@ -1,12 +1,21 @@
-// Generic placeholder names — not real companies. Replace with your own
-// "mentees placed at" list (text is enough; no logo assets required).
-export type Logo = { name: string };
+import { z } from "zod";
+import { getContent } from "@/lib/content";
 
-export const logos: Logo[] = [
-  { name: "TODO Company A" },
-  { name: "TODO Company B" },
-  { name: "TODO Company C" },
-  { name: "TODO Company D" },
-  { name: "TODO Company E" },
-  { name: "TODO Company F" },
-];
+export const logoSchema = z.object({
+  name: z.string().min(1),
+  initials: z.string().min(1).max(4),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+});
+export type Logo = z.infer<typeof logoSchema>;
+
+export const logosContentSchema = z.object({
+  logos: z.array(logoSchema),
+  mentorFromCompanies: z.array(logoSchema),
+});
+export type LogosContent = z.infer<typeof logosContentSchema>;
+
+export async function getLogosContent(): Promise<LogosContent> {
+  const data = await getContent<LogosContent>("logos");
+  if (!data) throw new Error("logos content not seeded");
+  return data;
+}
