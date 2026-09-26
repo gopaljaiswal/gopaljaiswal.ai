@@ -3,15 +3,16 @@ import { getAllPosts } from "@/lib/blog";
 import { PostCard } from "@/components/blog/post-card";
 import { LinkedInPostCard } from "@/components/blog/linkedin-post-card";
 import { Reveal } from "@/components/reveal";
-import { profile } from "@/data/profile";
-import { linkedinPosts } from "@/data/linkedin-posts";
+import { getProfileContent } from "@/data/profile";
+import { getLinkedinPosts } from "@/data/linkedin-posts";
 
-export const metadata: Metadata = {
-  title: `Blog — ${profile.name}`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getProfileContent();
+  return { title: `Blog — ${profile.name}` };
+}
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const [posts, linkedinPosts] = await Promise.all([getAllPosts(), getLinkedinPosts()]);
 
   return (
     <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">

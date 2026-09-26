@@ -1,7 +1,8 @@
-import { testimonials } from "@/data/testimonials";
+import { getTestimonialsContent } from "@/data/testimonials";
 import { TestimonialCard } from "@/components/testimonials/testimonial-card";
 
-export function TestimonialGrid({ limit }: { limit?: number }) {
+export async function TestimonialGrid({ limit }: { limit?: number }) {
+  const { testimonials } = await getTestimonialsContent();
   const items = limit ? testimonials.slice(0, limit) : testimonials;
 
   return (

@@ -3,11 +3,12 @@ import { TestimonialGrid } from "@/components/testimonials/testimonial-grid";
 import { RatingSummary } from "@/components/testimonials/rating-summary";
 import { LogoCloud } from "@/components/home/logo-cloud";
 import { Reveal } from "@/components/reveal";
-import { profile } from "@/data/profile";
+import { getProfileContent } from "@/data/profile";
 
-export const metadata: Metadata = {
-  title: `Results — ${profile.name}`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getProfileContent();
+  return { title: `Results — ${profile.name}` };
+}
 
 export default function ResultsPage() {
   return (

@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { ExternalLink, Link2 } from "lucide-react";
 import { BrandIcon } from "@/components/brand-icon";
-import { profile } from "@/data/profile";
-import { links } from "@/data/links";
+import { getProfileContent } from "@/data/profile";
+import { getLinks } from "@/data/links";
 
-const socials = [
-  { label: "LinkedIn", href: links.linkedin, color: "#0A66C2", node: <Link2 className="size-3" /> },
-  { label: "Topmate", href: links.topmate, color: undefined, node: <ExternalLink className="size-3" /> },
-  { label: "X", href: links.twitter, color: undefined, node: <BrandIcon brand="x" className="size-3" /> },
-  { label: "Substack", href: links.substack, color: "#FF6719", node: <BrandIcon brand="substack" className="size-3" /> },
-];
+export async function Footer() {
+  const [{ profile }, links] = await Promise.all([getProfileContent(), getLinks()]);
 
-export function Footer() {
+  const socials = [
+    { label: "LinkedIn", href: links.linkedin, color: "#0A66C2", node: <Link2 className="size-3" /> },
+    { label: "Topmate", href: links.topmate, color: undefined, node: <ExternalLink className="size-3" /> },
+    { label: "X", href: links.twitter, color: undefined, node: <BrandIcon brand="x" className="size-3" /> },
+    { label: "Substack", href: links.substack, color: "#FF6719", node: <BrandIcon brand="substack" className="size-3" /> },
+  ];
+
   return (
     <footer className="mt-24 border-t border-border/60">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-10 text-sm text-muted-foreground sm:flex-row sm:justify-between sm:px-6">

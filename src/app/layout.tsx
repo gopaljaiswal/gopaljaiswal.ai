@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
-import { profile } from "@/data/profile";
+import { getProfileContent } from "@/data/profile";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,12 +21,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.title}`,
-  description: profile.tagline,
-};
+// Content is DB-backed and admin-editable — render every request fresh
+// instead of caching pages as static HTML at build time.
+export const dynamic = "force-dynamic";
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getProfileContent();
+  return {
+    title: `${profile.name} — ${profile.title}`,
+    description: profile.tagline,
+  };
+}
+
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const { profile } = await getProfileContent();
+
   return (
     <html
       lang="en"
@@ -35,7 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <Nav />
+          <Nav profileName={profile.name} />
           <main className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
