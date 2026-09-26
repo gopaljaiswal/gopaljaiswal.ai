@@ -11,6 +11,8 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { profile } from "@/data/profile";
+
 const navLinks = [
   { label: "Resource", href: "/vault" },
   { label: "Coaching", href: "/coaching#mentorship" },
@@ -19,14 +21,14 @@ const navLinks = [
   { label: "Mock Interview", href: "/coaching#mock-interviews" },
 ];
 
-export function Nav({ profileName }: { profileName: string }) {
+export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="text-gradient-brand font-heading text-lg font-semibold tracking-tight">
-          {profileName}
+          {profile.name}
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">
@@ -43,9 +45,6 @@ export function Nav({ profileName }: { profileName: string }) {
 
         <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
-          <Button size="sm" render={<Link href="/admin/login" />}>
-            Sign in
-          </Button>
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
@@ -69,9 +68,6 @@ export function Nav({ profileName }: { profileName: string }) {
                     {link.label}
                   </Link>
                 ))}
-                <Link href="/admin/login" onClick={() => setOpen(false)} className="text-base font-medium">
-                  Sign in
-                </Link>
               </nav>
             </SheetContent>
           </Sheet>

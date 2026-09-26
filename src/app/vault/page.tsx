@@ -3,17 +3,14 @@ import { PricingCard } from "@/components/vault/pricing-card";
 import { DomainChart } from "@/components/vault/domain-chart";
 import { VaultQuestionList } from "@/components/vault/vault-question-list";
 import { Reveal } from "@/components/reveal";
-import { getProfileContent } from "@/data/profile";
-import { getVaultContent } from "@/data/vault";
+import { profile } from "@/data/profile";
+import { vaultQuestions } from "@/data/vault";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { profile } = await getProfileContent();
-  return { title: `Resource Vault — ${profile.name}` };
-}
+export const metadata: Metadata = {
+  title: `Resource Vault — ${profile.name}`,
+};
 
-export default async function VaultPage() {
-  const { vaultQuestions } = await getVaultContent();
-
+export default function VaultPage() {
   return (
     <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div

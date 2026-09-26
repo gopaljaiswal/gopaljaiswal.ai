@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { getLogosContent, type Logo } from "@/data/logos";
+import { logos, mentorFromCompanies, type Logo } from "@/data/logos";
 
 function Badge({ initials, color, size = "sm" }: { initials: string; color: string; size?: "sm" | "lg" }) {
   return (
@@ -23,8 +23,7 @@ function LogoPill({ name, initials, color }: Logo) {
   );
 }
 
-export async function LogoCloud({ compact = false }: { compact?: boolean }) {
-  const { logos, mentorFromCompanies } = await getLogosContent();
+export function LogoCloud({ compact = false }: { compact?: boolean }) {
   const track = [...logos, ...logos];
 
   return (

@@ -1,21 +1,19 @@
-import { z } from "zod";
-import { getContent } from "@/lib/content";
+// Companies mentees are now placed at, with a representative brand color
+// for the monogram badge (initials only — not a reproduction of the
+// company's actual logo/trademark).
+export type Logo = { name: string; initials: string; color: string };
 
-export const logoSchema = z.object({
-  name: z.string().min(1),
-  initials: z.string().min(1).max(4),
-  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
-});
-export type Logo = z.infer<typeof logoSchema>;
+export const logos: Logo[] = [
+  { name: "Amazon", initials: "A", color: "#FF9900" },
+  { name: "Zeta", initials: "Z", color: "#7C3AED" },
+  { name: "Adobe", initials: "Ad", color: "#FA0F00" },
+  { name: "Microsoft", initials: "MS", color: "#00A4EF" },
+];
 
-export const logosContentSchema = z.object({
-  logos: z.array(logoSchema),
-  mentorFromCompanies: z.array(logoSchema),
-});
-export type LogosContent = z.infer<typeof logosContentSchema>;
-
-export async function getLogosContent(): Promise<LogosContent> {
-  const data = await getContent<LogosContent>("logos");
-  if (!data) throw new Error("logos content not seeded");
-  return data;
-}
+// Where mentees came from before their transition.
+export const mentorFromCompanies: Logo[] = [
+  { name: "TCS", initials: "TCS", color: "#486AAE" },
+  { name: "Infosys", initials: "IN", color: "#007CC3" },
+  { name: "Capgemini", initials: "CG", color: "#0070AD" },
+  { name: "Cognizant", initials: "CTS", color: "#1D428A" },
+];

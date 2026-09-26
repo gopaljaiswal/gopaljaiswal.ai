@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { getVaultContent } from "@/data/vault";
+import { vaultQuestions } from "@/data/vault";
 import { VaultQuestionCard } from "@/components/vault/vault-question-card";
 
-export async function VaultPreview() {
-  const { vaultQuestions } = await getVaultContent();
+export function VaultPreview() {
   const preview = vaultQuestions.slice(0, 4);
 
   return (

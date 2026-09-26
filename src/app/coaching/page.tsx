@@ -18,19 +18,16 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/reveal";
-import { getProfileContent } from "@/data/profile";
-import { getServices } from "@/data/services";
+import { profile } from "@/data/profile";
+import { oneOnOneServices, coachingPackage, priorityDM, digitalProducts } from "@/data/services";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { profile } = await getProfileContent();
-  return { title: `Coaching — ${profile.name}` };
-}
+export const metadata: Metadata = {
+  title: `Coaching — ${profile.name}`,
+};
 
 const serviceIcons = [Coffee, MessageCircle, FileText, Code2, Presentation, Sparkles, Briefcase, Rocket];
 
-export default async function CoachingPage() {
-  const { oneOnOneServices, coachingPackage, priorityDM, digitalProducts } = await getServices();
-
+export default function CoachingPage() {
   return (
     <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div aria-hidden className="bg-grid-fade pointer-events-none absolute inset-0 -z-20" />

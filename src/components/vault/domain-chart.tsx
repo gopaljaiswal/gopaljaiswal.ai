@@ -1,8 +1,6 @@
-import { getVaultContent } from "@/data/vault";
+import { vaultQuestions } from "@/data/vault";
 
-export async function DomainChart() {
-  const { vaultQuestions } = await getVaultContent();
-
+export function DomainChart() {
   const counts = new Map<string, number>();
   for (const q of vaultQuestions) {
     counts.set(q.domain, (counts.get(q.domain) ?? 0) + 1);

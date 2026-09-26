@@ -1,16 +1,20 @@
-import { z } from "zod";
-import { getContent } from "@/lib/content";
+// Pulled from https://www.linkedin.com/in/gopal-jaiswal-568ab9a8/ (public activity).
+// Job/hiring posts are excluded on purpose — only genuine posts shown here.
 
-export const linkedInPostSchema = z.object({
-  id: z.string().min(1),
-  date: z.string().min(1),
-  text: z.string().min(1),
-  likes: z.number().int().nonnegative(),
-  url: z.string().url(),
-});
-export type LinkedInPost = z.infer<typeof linkedInPostSchema>;
+export type LinkedInPost = {
+  id: string;
+  date: string;
+  text: string;
+  likes: number;
+  url: string;
+};
 
-export async function getLinkedinPosts(): Promise<LinkedInPost[]> {
-  const data = await getContent<LinkedInPost[]>("linkedinPosts");
-  return data ?? [];
-}
+export const linkedinPosts: LinkedInPost[] = [
+  {
+    id: "claude-code",
+    date: "2026-09-15",
+    text: "I was exploring Claude Code and came across this gem. A 2-hour session by an Anthropic developer that explains Claude Code really well. I knew most of the concepts already, but the way they're explained makes it worth your time. Save this post — watch it when you get 2 hours.",
+    likes: 9,
+    url: "https://www.linkedin.com/posts/gopal-jaiswal-568ab9a8_claudecode-agenticai-ai-activity-7505459171895582721-QbNq",
+  },
+];

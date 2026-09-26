@@ -1,8 +1,6 @@
-import { getTestimonialsContent } from "@/data/testimonials";
+import { ratingSummary } from "@/data/testimonials";
 
-export async function RatingSummary() {
-  const { ratingSummary } = await getTestimonialsContent();
-
+export function RatingSummary() {
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
       <span className="font-heading text-lg text-foreground">★ {ratingSummary.rating}</span>

@@ -2,14 +2,11 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getVaultContent } from "@/data/vault";
-import { getLinks } from "@/data/links";
+import { vaultQuestions } from "@/data/vault";
+import { vaultPricing } from "@/data/pricing";
+import { links } from "@/data/links";
 
-export async function PricingCard() {
-  const [{ vaultQuestions, vaultPricing }, links] = await Promise.all([
-    getVaultContent(),
-    getLinks(),
-  ]);
+export function PricingCard() {
   const freeCount = vaultQuestions.filter((q) => !q.locked).length;
   const domainCount = new Set(vaultQuestions.map((q) => q.domain)).size;
 

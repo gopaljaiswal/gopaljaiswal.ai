@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getProfileContent } from "@/data/profile";
-import { getLinks } from "@/data/links";
+import { profile } from "@/data/profile";
+import { links } from "@/data/links";
 
-export async function CtaBanner() {
-  const [{ profile }, links] = await Promise.all([getProfileContent(), getLinks()]);
-
+export function CtaBanner() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="bg-gradient-brand relative overflow-hidden rounded-3xl px-6 py-14 text-center sm:px-16 sm:py-20">
