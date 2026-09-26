@@ -1,84 +1,176 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  Coffee,
+  MessageCircle,
+  FileText,
+  Code2,
+  Presentation,
+  Sparkles,
+  Briefcase,
+  Rocket,
+  Package,
+  Download,
+  IndianRupee,
+  ArrowUpRight,
+} from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/reveal";
 import { profile } from "@/data/profile";
-import { links } from "@/data/links";
+import { oneOnOneServices, coachingPackage, priorityDM, digitalProducts } from "@/data/services";
 
 export const metadata: Metadata = {
   title: `Coaching — ${profile.name}`,
 };
 
-const mockInterviewFormats = [
-  {
-    name: "System Design (HLD)",
-    description: "A full high-level design round with live feedback on trade-offs and communication.",
-  },
-  {
-    name: "DSA / LLD",
-    description: "Coding and low-level design, graded the way an onsite loop actually grades it.",
-  },
-  {
-    name: "Behavioural",
-    description: "Story structure, leadership signals, and how to answer without rambling.",
-  },
-  {
-    name: "Monthly deep-dive",
-    description: "A recurring monthly session for ongoing, structured interview prep.",
-  },
-];
+const serviceIcons = [Coffee, MessageCircle, FileText, Code2, Presentation, Sparkles, Briefcase, Rocket];
 
 export default function CoachingPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <div aria-hidden className="bg-grid-fade pointer-events-none absolute inset-0 -z-20" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-20 left-1/4 -z-10 h-[340px] w-[340px] rounded-full bg-[color-mix(in_oklch,var(--brand-from)_35%,transparent)] blur-[120px]"
+      />
+
       <div>
         <p className="text-sm font-medium text-primary">Coaching</p>
         <h1 className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">
-          Mock interviews & career mentorship
+          <span className="text-gradient-brand">Mock interviews & career mentorship</span>
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Live 1:1 sessions — book a mock interview to pressure-test where you are, or ongoing
-          mentorship to work through the bigger career decisions.
+          Live 1:1 sessions, booked directly on Topmate — pick a format below, or send a quick
+          question if you&apos;re not sure where to start.
         </p>
       </div>
 
       <section id="mock-interviews" className="scroll-mt-24 py-12">
-        <h2 className="mb-6 font-heading text-xl tracking-tight">02 / Mock interviews</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {mockInterviewFormats.map((format) => (
-            <Card key={format.name} className="border-border/70 py-6">
-              <CardHeader>
-                <h3 className="font-heading text-lg tracking-tight">{format.name}</h3>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{format.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        <Button
-          size="lg"
-          className="mt-8"
-          render={<Link href={links.topmate} target="_blank" rel="noreferrer" />}
-        >
-          Book a mock interview
-        </Button>
+        <h2 className="mb-6 font-heading text-xl tracking-tight">1:1 sessions</h2>
+        <Reveal>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {oneOnOneServices.map((service, i) => {
+              const Icon = serviceIcons[i % serviceIcons.length];
+              return (
+                <Card key={service.name} className="card-interactive flex flex-col border-border/70 py-6">
+                  <CardHeader>
+                    <span className="bg-gradient-brand flex size-9 items-center justify-center rounded-lg text-white">
+                      <Icon className="size-4" />
+                    </span>
+                    <h3 className="mt-2 font-heading text-lg tracking-tight">{service.name}</h3>
+                  </CardHeader>
+                  <CardContent className="flex flex-1 flex-col justify-between gap-4">
+                    <p className="text-sm text-muted-foreground">{service.durationMinutes} min video call</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading text-lg">
+                        <IndianRupee className="mb-0.5 inline size-4" />
+                        {service.price.toLocaleString("en-IN")}
+                      </span>
+                      <Link
+                        href={service.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                      >
+                        Book
+                        <ArrowUpRight className="size-3.5" />
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </Reveal>
       </section>
 
       <section id="mentorship" className="scroll-mt-24 border-t border-border/60 py-12">
-        <h2 className="mb-4 font-heading text-xl tracking-tight">03 / Career mentorship</h2>
-        <p className="max-w-2xl text-sm text-muted-foreground">
-          Ongoing 1:1 guidance on levelling up, interview strategy, and career decisions —
-          tailored to where you are today. TODO: describe your mentorship format, cadence, and
-          what a session covers.
-        </p>
-        <Button
-          size="lg"
-          className="mt-8"
-          render={<Link href={links.calendly} target="_blank" rel="noreferrer" />}
-        >
-          Book mentorship
-        </Button>
+        <h2 className="mb-6 font-heading text-xl tracking-tight">Coaching package & ongoing support</h2>
+
+        <Reveal>
+          <Card className="border-primary/30 py-6 shadow-[0_30px_60px_-32px_color-mix(in_oklch,var(--brand-from)_50%,transparent)]">
+            <CardHeader>
+              <Badge className="bg-gradient-brand w-fit border-0 text-white">
+                <Package className="size-3.5" />
+                4-session package
+              </Badge>
+              <h3 className="mt-2 font-heading text-xl tracking-tight">{coachingPackage.name}</h3>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-xl text-sm text-muted-foreground">{coachingPackage.description}</p>
+              <div className="flex items-center gap-4">
+                <span className="font-heading text-2xl">
+                  <IndianRupee className="mb-0.5 inline size-5" />
+                  {coachingPackage.price.toLocaleString("en-IN")}
+                </span>
+                <Button
+                  className="bg-gradient-brand border-0 text-white hover:opacity-90"
+                  render={<Link href={coachingPackage.href} target="_blank" rel="noreferrer" />}
+                >
+                  Book the package
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </Reveal>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Card className="card-interactive border-border/70 py-6">
+            <CardHeader>
+              <h3 className="font-heading text-base tracking-tight">{priorityDM.name}</h3>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+              <p className="text-sm text-muted-foreground">{priorityDM.description}</p>
+              <Button
+                size="sm"
+                variant="outline"
+                render={<Link href={priorityDM.href} target="_blank" rel="noreferrer" />}
+              >
+                <IndianRupee className="size-3.5" />
+                {priorityDM.price}
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="card-interactive border-border/70 py-6">
+            <CardHeader>
+              <h3 className="font-heading text-base tracking-tight">Not sure what you need?</h3>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+              <p className="text-sm text-muted-foreground">
+                Message directly and I&apos;ll point you to the right session.
+              </p>
+              <Button size="sm" render={<Link href="https://topmate.io/gopal_jaiswal12/" target="_blank" rel="noreferrer" />}>
+                View profile
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 py-12">
+        <h2 className="mb-6 font-heading text-xl tracking-tight">Digital resources</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {digitalProducts.map((product) => (
+            <Link
+              key={product.name}
+              href={product.href}
+              target="_blank"
+              rel="noreferrer"
+              className="card-interactive flex items-center justify-between gap-3 rounded-xl border border-border/70 bg-card px-4 py-3"
+            >
+              <span className="flex items-center gap-2 text-sm">
+                <Download className="size-4 shrink-0 text-primary" />
+                {product.name}
+              </span>
+              <span className="shrink-0 text-sm font-medium text-primary">
+                ₹{product.price}
+              </span>
+            </Link>
+          ))}
+        </div>
       </section>
     </div>
   );

@@ -26,8 +26,8 @@ export const offerings: Offering[] = [
     icon: "Mic",
     title: "Mock Interviews",
     description:
-      "Live 1:1 mock interviews across formats — system design, DSA/LLD, behavioural, and monthly deep-dives.",
-    meta: ["Live 1:1", "4 formats"],
+      "Live 1:1 sessions across formats — DSA, system design, resume review, GenAI career guidance, and more.",
+    meta: ["Live 1:1", "8 formats"],
     ctaLabel: "See formats",
     ctaHref: "/coaching#mock-interviews",
   },

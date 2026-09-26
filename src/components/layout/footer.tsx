@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { Link2, ExternalLink, MessageCircle, Rss } from "lucide-react";
+import { ExternalLink, Link2 } from "lucide-react";
+import { BrandIcon } from "@/components/brand-icon";
 import { profile } from "@/data/profile";
 import { links } from "@/data/links";
 
 const socials = [
-  { label: "LinkedIn", href: links.linkedin, icon: Link2 },
-  { label: "Topmate", href: links.topmate, icon: ExternalLink },
-  { label: "Twitter", href: links.twitter, icon: MessageCircle },
-  { label: "Substack", href: links.substack, icon: Rss },
+  { label: "LinkedIn", href: links.linkedin, color: "#0A66C2", node: <Link2 className="size-3" /> },
+  { label: "Topmate", href: links.topmate, color: undefined, node: <ExternalLink className="size-3" /> },
+  { label: "X", href: links.twitter, color: undefined, node: <BrandIcon brand="x" className="size-3" /> },
+  { label: "Substack", href: links.substack, color: "#FF6719", node: <BrandIcon brand="substack" className="size-3" /> },
 ];
 
 export function Footer() {
@@ -17,16 +18,21 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {profile.name}
         </p>
-        <div className="flex items-center gap-5">
-          {socials.map(({ label, href, icon: Icon }) => (
+        <div className="flex items-center gap-4">
+          {socials.map(({ label, href, color, node }) => (
             <Link
               key={label}
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1.5 transition-colors hover:text-foreground"
+              className="flex items-center gap-2 transition-colors hover:text-foreground"
             >
-              <Icon className="size-4" />
+              <span
+                className="bg-gradient-brand flex size-6 items-center justify-center rounded-full text-white"
+                style={color ? { backgroundImage: "none", backgroundColor: color } : undefined}
+              >
+                {node}
+              </span>
               {label}
             </Link>
           ))}

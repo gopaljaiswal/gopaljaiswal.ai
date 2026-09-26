@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { vaultPricing } from "@/data/pricing";
 import { vaultQuestions } from "@/data/vault";
+import { vaultPricing } from "@/data/pricing";
 import { links } from "@/data/links";
 
 export function PricingCard() {

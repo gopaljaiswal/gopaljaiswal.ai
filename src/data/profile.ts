@@ -9,14 +9,12 @@ export const profile = {
   initials: "GJ",
 };
 
-// Pulled from your LinkedIn public profile.
 export const education = {
   school: "National Institute of Technology, Nagaland",
   years: "2012 – 2016",
   detail: "Technical Secretary, Computer Science & Engineering",
 };
 
-// Pulled from your LinkedIn public profile — trim/expand as you like.
 export const certifications: string[] = [
   "Microservices: Designing Highly Scalable Systems",
   "Java Multithreading, Concurrency & Performance Optimization",
