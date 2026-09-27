@@ -1,6 +1,6 @@
-import { siX, siSubstack } from "simple-icons";
+import { siInstagram } from "simple-icons";
 
-const icons = { x: siX, substack: siSubstack };
+const icons = { instagram: siInstagram };
 
 export function BrandIcon({ brand, className }: { brand: keyof typeof icons; className?: string }) {
   const icon = icons[brand];

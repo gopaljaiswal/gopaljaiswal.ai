@@ -49,9 +49,8 @@ function LogoListEditor({
 export function LogosForm({ initial }: { initial: LogosContent }) {
   const [state, formAction] = useActionState(saveLogos, undefined);
   const [logos, setLogos] = useState<Logo[]>(initial.logos);
-  const [mentorFromCompanies, setMentorFromCompanies] = useState<Logo[]>(initial.mentorFromCompanies);
 
-  const payload: LogosContent = { logos, mentorFromCompanies };
+  const payload: LogosContent = { logos };
 
   return (
     <form action={formAction} className="space-y-8">
@@ -60,11 +59,6 @@ export function LogosForm({ initial }: { initial: LogosContent }) {
       <div>
         <h3 className="mb-3 text-sm font-medium text-muted-foreground">Mentees now at</h3>
         <LogoListEditor items={logos} onChange={setLogos} itemLabel="company" />
-      </div>
-
-      <div>
-        <h3 className="mb-3 text-sm font-medium text-muted-foreground">Mentees from</h3>
-        <LogoListEditor items={mentorFromCompanies} onChange={setMentorFromCompanies} itemLabel="company" />
       </div>
 
       {state?.error && <p className="text-sm text-destructive">{state.error}</p>}

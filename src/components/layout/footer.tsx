@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, Link2 } from "lucide-react";
+import { ExternalLink, Link2, Users } from "lucide-react";
 import { BrandIcon } from "@/components/brand-icon";
 import { getProfileContent } from "@/data/profile";
 import { getLinks } from "@/data/links";
@@ -10,8 +10,8 @@ export async function Footer() {
   const socials = [
     { label: "LinkedIn", href: links.linkedin, color: "#0A66C2", node: <Link2 className="size-3" /> },
     { label: "Topmate", href: links.topmate, color: undefined, node: <ExternalLink className="size-3" /> },
-    { label: "X", href: links.twitter, color: undefined, node: <BrandIcon brand="x" className="size-3" /> },
-    { label: "Substack", href: links.substack, color: "#FF6719", node: <BrandIcon brand="substack" className="size-3" /> },
+    { label: "Instagram", href: links.instagram, color: "#FF0069", node: <BrandIcon brand="instagram" className="size-3" /> },
+    { label: "Propeers", href: links.propeers, color: undefined, node: <Users className="size-3" /> },
   ];
 
   return (
@@ -20,7 +20,7 @@ export async function Footer() {
         <p>
           © {new Date().getFullYear()} {profile.name}
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           {socials.map(({ label, href, color, node }) => (
             <Link
               key={label}

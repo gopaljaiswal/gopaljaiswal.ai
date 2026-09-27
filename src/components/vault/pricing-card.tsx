@@ -3,31 +3,21 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getVaultContent } from "@/data/vault";
-import { getLinks } from "@/data/links";
+import { flattenQuestions } from "@/lib/vault-nav";
 
 export async function PricingCard() {
-  const [{ vaultQuestions, vaultPricing }, links] = await Promise.all([
-    getVaultContent(),
-    getLinks(),
-  ]);
-  const freeCount = vaultQuestions.filter((q) => !q.locked).length;
+  const { vaultQuestions } = await getVaultContent();
   const domainCount = new Set(vaultQuestions.map((q) => q.domain)).size;
+  const firstId = flattenQuestions(vaultQuestions)[0]?.id;
 
   return (
     <Card className="border-primary/30 py-6 shadow-[0_30px_60px_-32px_color-mix(in_oklch,var(--brand-from)_50%,transparent)]">
       <CardHeader>
-        <Badge variant="secondary" className="w-fit">
-          Lifetime access
-        </Badge>
-        <h3 className="mt-2 font-heading text-xl tracking-tight">
-          The System Design & Engineering Vault
-        </h3>
-        <p className="text-xs text-muted-foreground">
-          {vaultPricing.rating} · {vaultPricing.ratingCount}
-        </p>
+        <Badge className="bg-gradient-brand w-fit border-0 text-white">Fully open</Badge>
+        <h3 className="mt-2 font-heading text-xl tracking-tight">Every interview answer, free</h3>
       </CardHeader>
       <CardContent className="space-y-5">
-        <div className="grid grid-cols-3 gap-2 text-center text-xs text-muted-foreground">
+        <div className="grid grid-cols-2 gap-2 text-center text-xs text-muted-foreground">
           <div className="rounded-lg border border-border/70 py-2">
             <p className="font-heading text-lg text-foreground">{vaultQuestions.length}</p>
             answers
@@ -36,32 +26,20 @@ export async function PricingCard() {
             <p className="font-heading text-lg text-foreground">{domainCount}</p>
             domains
           </div>
-          <div className="rounded-lg border border-border/70 py-2">
-            <p className="font-heading text-lg text-foreground">{freeCount}</p>
-            open free
-          </div>
         </div>
 
-        <div className="flex items-baseline gap-2">
-          <span className="font-heading text-2xl">{vaultPricing.price}</span>
-          <span className="text-sm text-muted-foreground line-through">
-            {vaultPricing.listPrice}
-          </span>
-        </div>
-        <p className="text-xs text-muted-foreground">{vaultPricing.discountLabel}</p>
-        <p className="text-xs text-muted-foreground">{vaultPricing.accessLabel}</p>
+        <p className="text-xs text-muted-foreground">
+          No sign-up, no paywall — every answer below is open to read.
+        </p>
 
-        <div className="flex flex-col gap-2 sm:flex-row">
+        {firstId && (
           <Button
-            className="bg-gradient-brand flex-1 border-0 text-white hover:opacity-90"
-            render={<Link href={links.topmate} target="_blank" rel="noreferrer" />}
+            className="bg-gradient-brand w-full border-0 text-white hover:opacity-90"
+            render={<Link href={`/guide/${firstId}`} />}
           >
-            Get lifetime access
+            Browse all questions
           </Button>
-          <Button variant="outline" className="flex-1" render={<Link href="#vault-questions" />}>
-            Open free answers
-          </Button>
-        </div>
+        )}
       </CardContent>
     </Card>
   );

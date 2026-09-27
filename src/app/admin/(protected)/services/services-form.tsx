@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { ArrayEditor, Field, inputClass } from "@/components/admin/array-editor";
+import { ArrayEditor, Field, inputClass, textareaClass } from "@/components/admin/array-editor";
 import { SaveButton } from "@/components/admin/save-button";
 import type { ServicesContent, OneOnOneService, DigitalProduct } from "@/data/services";
 import { saveServices } from "./actions";
@@ -25,30 +25,39 @@ export function ServicesForm({ initial }: { initial: ServicesContent }) {
           items={oneOnOneServices}
           onChange={setOneOnOneServices}
           itemLabel="service"
-          newItem={() => ({ name: "", durationMinutes: 30, price: 0, href: "" })}
+          newItem={() => ({ name: "", description: "", durationMinutes: 30, price: 0, href: "" })}
           renderItem={(item, _i, update) => (
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Name">
-                <input className={inputClass} value={item.name} onChange={(e) => update({ name: e.target.value })} />
-              </Field>
-              <Field label="Duration (minutes)">
-                <input
-                  type="number"
-                  className={inputClass}
-                  value={item.durationMinutes}
-                  onChange={(e) => update({ durationMinutes: Number(e.target.value) })}
+            <div className="space-y-3">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field label="Name">
+                  <input className={inputClass} value={item.name} onChange={(e) => update({ name: e.target.value })} />
+                </Field>
+                <Field label="Duration (minutes)">
+                  <input
+                    type="number"
+                    className={inputClass}
+                    value={item.durationMinutes}
+                    onChange={(e) => update({ durationMinutes: Number(e.target.value) })}
+                  />
+                </Field>
+                <Field label="Price (₹)">
+                  <input
+                    type="number"
+                    className={inputClass}
+                    value={item.price}
+                    onChange={(e) => update({ price: Number(e.target.value) })}
+                  />
+                </Field>
+                <Field label="Booking link">
+                  <input className={inputClass} value={item.href} onChange={(e) => update({ href: e.target.value })} />
+                </Field>
+              </div>
+              <Field label="One-line description">
+                <textarea
+                  className={textareaClass}
+                  value={item.description}
+                  onChange={(e) => update({ description: e.target.value })}
                 />
-              </Field>
-              <Field label="Price (₹)">
-                <input
-                  type="number"
-                  className={inputClass}
-                  value={item.price}
-                  onChange={(e) => update({ price: Number(e.target.value) })}
-                />
-              </Field>
-              <Field label="Booking link">
-                <input className={inputClass} value={item.href} onChange={(e) => update({ href: e.target.value })} />
               </Field>
             </div>
           )}
@@ -131,18 +140,31 @@ export function ServicesForm({ initial }: { initial: ServicesContent }) {
           items={digitalProducts}
           onChange={setDigitalProducts}
           itemLabel="product"
-          newItem={() => ({ name: "", price: 0, href: "" })}
+          newItem={() => ({ name: "", category: "", price: 0, originalPrice: undefined, href: "" })}
           renderItem={(item, _i, update) => (
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-5">
               <Field label="Name">
                 <input className={inputClass} value={item.name} onChange={(e) => update({ name: e.target.value })} />
               </Field>
-              <Field label="Price (₹)">
+              <Field label="Category">
+                <input className={inputClass} value={item.category} onChange={(e) => update({ category: e.target.value })} />
+              </Field>
+              <Field label="Price (₹) — 0 = Free">
                 <input
                   type="number"
                   className={inputClass}
                   value={item.price}
                   onChange={(e) => update({ price: Number(e.target.value) })}
+                />
+              </Field>
+              <Field label="Original price (₹, optional — shown struck through)">
+                <input
+                  type="number"
+                  className={inputClass}
+                  value={item.originalPrice ?? ""}
+                  onChange={(e) =>
+                    update({ originalPrice: e.target.value === "" ? undefined : Number(e.target.value) })
+                  }
                 />
               </Field>
               <Field label="Link">

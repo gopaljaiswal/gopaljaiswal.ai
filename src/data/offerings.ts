@@ -12,6 +12,9 @@ export const offeringSchema = z.object({
   meta: z.array(z.string()),
   ctaLabel: z.string().min(1),
   ctaHref: z.string().min(1),
+  // Visual weight in the 4-up grid — paid/mentorship offers stay primary,
+  // free content (essays) reads as a lighter, secondary tile.
+  emphasis: z.enum(["primary", "secondary"]).default("primary"),
 });
 export type Offering = z.infer<typeof offeringSchema>;
 

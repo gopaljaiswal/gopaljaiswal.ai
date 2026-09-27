@@ -3,6 +3,7 @@ import { getContent } from "@/lib/content";
 
 export const oneOnOneServiceSchema = z.object({
   name: z.string().min(1),
+  description: z.string().min(1),
   durationMinutes: z.number().int().positive(),
   price: z.number().nonnegative(),
   href: z.string().url(),
@@ -18,7 +19,9 @@ export const namedOfferSchema = z.object({
 
 export const digitalProductSchema = z.object({
   name: z.string().min(1),
+  category: z.string().min(1),
   price: z.number().nonnegative(),
+  originalPrice: z.number().nonnegative().optional(),
   href: z.string().url(),
 });
 export type DigitalProduct = z.infer<typeof digitalProductSchema>;

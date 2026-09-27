@@ -1,11 +1,15 @@
 import { z } from "zod";
 import { getContent } from "@/lib/content";
 
+export const testimonialSourceSchema = z.enum(["topmate", "propeers"]);
+export type TestimonialSource = z.infer<typeof testimonialSourceSchema>;
+
 export const testimonialSchema = z.object({
   id: z.string().min(1),
   quote: z.string().min(1),
   name: z.string().min(1),
   sessionTopic: z.string().min(1),
+  source: testimonialSourceSchema.default("topmate"),
 });
 export type Testimonial = z.infer<typeof testimonialSchema>;
 

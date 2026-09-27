@@ -10,7 +10,6 @@ import {
   Briefcase,
   Rocket,
   Package,
-  Download,
   IndianRupee,
   ArrowUpRight,
 } from "lucide-react";
@@ -29,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const serviceIcons = [Coffee, MessageCircle, FileText, Code2, Presentation, Sparkles, Briefcase, Rocket];
 
 export default async function CoachingPage() {
-  const { oneOnOneServices, coachingPackage, priorityDM, digitalProducts } = await getServices();
+  const { oneOnOneServices, coachingPackage, priorityDM } = await getServices();
 
   return (
     <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
@@ -65,7 +64,10 @@ export default async function CoachingPage() {
                     <h3 className="mt-2 font-heading text-lg tracking-tight">{service.name}</h3>
                   </CardHeader>
                   <CardContent className="flex flex-1 flex-col justify-between gap-4">
-                    <p className="text-sm text-muted-foreground">{service.durationMinutes} min video call</p>
+                    <div>
+                      <p className="text-sm text-muted-foreground">{service.description}</p>
+                      <p className="mt-2 text-xs text-muted-foreground/70">{service.durationMinutes} min video call</p>
+                    </div>
                     <div className="flex items-center justify-between">
                       <span className="font-heading text-lg">
                         <IndianRupee className="mb-0.5 inline size-4" />
@@ -77,7 +79,7 @@ export default async function CoachingPage() {
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
                       >
-                        Book
+                        Book a session
                         <ArrowUpRight className="size-3.5" />
                       </Link>
                     </div>
@@ -153,28 +155,6 @@ export default async function CoachingPage() {
         </div>
       </section>
 
-      <section className="border-t border-border/60 py-12">
-        <h2 className="mb-6 font-heading text-xl tracking-tight">Digital resources</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {digitalProducts.map((product) => (
-            <Link
-              key={product.name}
-              href={product.href}
-              target="_blank"
-              rel="noreferrer"
-              className="card-interactive flex items-center justify-between gap-3 rounded-xl border border-border/70 bg-card px-4 py-3"
-            >
-              <span className="flex items-center gap-2 text-sm">
-                <Download className="size-4 shrink-0 text-primary" />
-                {product.name}
-              </span>
-              <span className="shrink-0 text-sm font-medium text-primary">
-                ₹{product.price}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

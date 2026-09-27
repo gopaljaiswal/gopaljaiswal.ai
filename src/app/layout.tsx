@@ -4,7 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { StickyCtaBar } from "@/components/home/sticky-cta-bar";
 import { getProfileContent } from "@/data/profile";
+import { getLinks } from "@/data/links";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,13 +30,14 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const { profile } = await getProfileContent();
   return {
-    title: `${profile.name} — ${profile.title}`,
+    title: `${profile.name} — Mock Interviews & Mentorship for MAANG, Nvidia, Microsoft`,
     description: profile.tagline,
+    keywords: [...profile.tags, "MAANG interview prep", "mock interviews", "system design", "career mentorship"],
   };
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const { profile } = await getProfileContent();
+  const [{ profile }, links] = await Promise.all([getProfileContent(), getLinks()]);
 
   return (
     <html
@@ -45,8 +48,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <Nav profileName={profile.name} />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pb-20 sm:pb-0">{children}</main>
           <Footer />
+          <StickyCtaBar label={links.primaryCtaLabel} href={links.primaryCtaHref} />
         </ThemeProvider>
       </body>
     </html>

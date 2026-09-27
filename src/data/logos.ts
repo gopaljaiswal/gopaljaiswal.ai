@@ -10,7 +10,6 @@ export type Logo = z.infer<typeof logoSchema>;
 
 export const logosContentSchema = z.object({
   logos: z.array(logoSchema),
-  mentorFromCompanies: z.array(logoSchema),
 });
 export type LogosContent = z.infer<typeof logosContentSchema>;
 

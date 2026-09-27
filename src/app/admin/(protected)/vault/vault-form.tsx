@@ -50,20 +50,6 @@ export function VaultForm({ initial }: { initial: VaultContent }) {
               onChange={(e) => setVaultPricing({ ...vaultPricing, accessLabel: e.target.value })}
             />
           </Field>
-          <Field label="Rating">
-            <input
-              className={inputClass}
-              value={vaultPricing.rating}
-              onChange={(e) => setVaultPricing({ ...vaultPricing, rating: e.target.value })}
-            />
-          </Field>
-          <Field label="Rating count">
-            <input
-              className={inputClass}
-              value={vaultPricing.ratingCount}
-              onChange={(e) => setVaultPricing({ ...vaultPricing, ratingCount: e.target.value })}
-            />
-          </Field>
         </div>
       </section>
 
@@ -80,11 +66,10 @@ export function VaultForm({ initial }: { initial: VaultContent }) {
             question: "",
             teaser: "",
             answer: "",
-            locked: true,
           })}
           renderItem={(item, _i, update) => (
             <div className="space-y-3">
-              <div className="grid gap-3 sm:grid-cols-4">
+              <div className="grid gap-3 sm:grid-cols-3">
                 <Field label="ID">
                   <input className={inputClass} value={item.id} onChange={(e) => update({ id: e.target.value })} />
                 </Field>
@@ -102,16 +87,6 @@ export function VaultForm({ initial }: { initial: VaultContent }) {
                         {d}
                       </option>
                     ))}
-                  </select>
-                </Field>
-                <Field label="Locked">
-                  <select
-                    className={inputClass}
-                    value={item.locked ? "yes" : "no"}
-                    onChange={(e) => update({ locked: e.target.value === "yes" })}
-                  >
-                    <option value="yes">Locked</option>
-                    <option value="no">Open free</option>
                   </select>
                 </Field>
               </div>

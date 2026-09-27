@@ -34,7 +34,7 @@ export function TestimonialsForm({ initial }: { initial: TestimonialsContent }) 
               onChange={(e) => setRatingSummary({ ...ratingSummary, ratingCount: e.target.value })}
             />
           </Field>
-          <Field label="Bookings (e.g. 107 bookings)">
+          <Field label="Bookings (e.g. 300+ sessions)">
             <input
               className={inputClass}
               value={ratingSummary.bookings}
@@ -55,10 +55,11 @@ export function TestimonialsForm({ initial }: { initial: TestimonialsContent }) 
             quote: "",
             name: "Anonymous",
             sessionTopic: "",
+            source: "topmate" as const,
           })}
           renderItem={(item, _i, update) => (
             <div className="space-y-3">
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-3">
                 <Field label="Name">
                   <input className={inputClass} value={item.name} onChange={(e) => update({ name: e.target.value })} />
                 </Field>
@@ -68,6 +69,16 @@ export function TestimonialsForm({ initial }: { initial: TestimonialsContent }) 
                     value={item.sessionTopic}
                     onChange={(e) => update({ sessionTopic: e.target.value })}
                   />
+                </Field>
+                <Field label="Source">
+                  <select
+                    className={inputClass}
+                    value={item.source}
+                    onChange={(e) => update({ source: e.target.value as Testimonial["source"] })}
+                  >
+                    <option value="topmate">Topmate</option>
+                    <option value="propeers">Propeers</option>
+                  </select>
                 </Field>
               </div>
               <Field label="Quote">

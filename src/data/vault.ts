@@ -11,7 +11,6 @@ export const vaultQuestionSchema = z.object({
   question: z.string().min(1),
   teaser: z.string().min(1),
   answer: z.string().optional(),
-  locked: z.boolean(),
 });
 export type VaultQuestion = z.infer<typeof vaultQuestionSchema>;
 
@@ -20,8 +19,6 @@ export const vaultPricingSchema = z.object({
   listPrice: z.string().min(1),
   discountLabel: z.string().min(1),
   accessLabel: z.string().min(1),
-  rating: z.string().min(1),
-  ratingCount: z.string().min(1),
 });
 export type VaultPricing = z.infer<typeof vaultPricingSchema>;
 

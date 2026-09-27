@@ -3,9 +3,9 @@
 import { useActionState, useState } from "react";
 import { Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Field, inputClass, textareaClass } from "@/components/admin/array-editor";
+import { ArrayEditor, Field, inputClass, textareaClass } from "@/components/admin/array-editor";
 import { SaveButton } from "@/components/admin/save-button";
-import type { ProfileContent } from "@/data/profile";
+import type { ProfileContent, CareerStep } from "@/data/profile";
 import { saveProfile } from "./actions";
 
 export function ProfileForm({ initial }: { initial: ProfileContent }) {
@@ -13,8 +13,9 @@ export function ProfileForm({ initial }: { initial: ProfileContent }) {
   const [profile, setProfile] = useState(initial.profile);
   const [education, setEducation] = useState(initial.education);
   const [certifications, setCertifications] = useState<string[]>(initial.certifications);
+  const [careerJourney, setCareerJourney] = useState<CareerStep[]>(initial.careerJourney);
 
-  const payload: ProfileContent = { profile, education, certifications };
+  const payload: ProfileContent = { profile, education, certifications, careerJourney };
 
   return (
     <form action={formAction} className="space-y-10">
@@ -26,7 +27,7 @@ export function ProfileForm({ initial }: { initial: ProfileContent }) {
           <Field label="Name">
             <input className={inputClass} value={profile.name} onChange={(e) => setProfile({ ...profile, name: e.target.value })} />
           </Field>
-          <Field label="Title">
+          <Field label="Title (credibility line + SEO title)">
             <input className={inputClass} value={profile.title} onChange={(e) => setProfile({ ...profile, title: e.target.value })} />
           </Field>
           <Field label="Location">
@@ -41,6 +42,26 @@ export function ProfileForm({ initial }: { initial: ProfileContent }) {
           </Field>
           <Field label="Tagline">
             <input className={inputClass} value={profile.tagline} onChange={(e) => setProfile({ ...profile, tagline: e.target.value })} />
+          </Field>
+        </div>
+        <div className="mt-3">
+          <Field label="Headline (hero H1 — benefit-led, not a job title)">
+            <input
+              className={inputClass}
+              value={profile.headline}
+              onChange={(e) => setProfile({ ...profile, headline: e.target.value })}
+            />
+          </Field>
+        </div>
+        <div className="mt-3">
+          <Field label="Skill tags (comma-separated — shown as badges under the headline, also used as SEO keywords)">
+            <input
+              className={inputClass}
+              value={profile.tags.join(", ")}
+              onChange={(e) =>
+                setProfile({ ...profile, tags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })
+              }
+            />
           </Field>
         </div>
         <div className="mt-3">
@@ -63,6 +84,43 @@ export function ProfileForm({ initial }: { initial: ProfileContent }) {
             <input className={inputClass} value={education.detail} onChange={(e) => setEducation({ ...education, detail: e.target.value })} />
           </Field>
         </div>
+      </section>
+
+      <section>
+        <h2 className="mb-3 font-heading text-lg tracking-tight">Career journey (homepage timeline)</h2>
+        <ArrayEditor
+          items={careerJourney}
+          onChange={setCareerJourney}
+          itemLabel="step"
+          newItem={(): CareerStep => ({ org: "", role: "", period: "", initials: "", color: "#7C3AED" })}
+          renderItem={(item, _i, update) => (
+            <div className="grid gap-3 sm:grid-cols-5">
+              <Field label="Organization">
+                <input className={inputClass} value={item.org} onChange={(e) => update({ org: e.target.value })} />
+              </Field>
+              <Field label="Role">
+                <input className={inputClass} value={item.role} onChange={(e) => update({ role: e.target.value })} />
+              </Field>
+              <Field label="Period (e.g. 2019 – 2021)">
+                <input className={inputClass} value={item.period} onChange={(e) => update({ period: e.target.value })} />
+              </Field>
+              <Field label="Badge initials">
+                <input className={inputClass} value={item.initials} onChange={(e) => update({ initials: e.target.value })} />
+              </Field>
+              <Field label="Badge color">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    className="h-9 w-12 shrink-0 rounded border border-border bg-background"
+                    value={item.color}
+                    onChange={(e) => update({ color: e.target.value })}
+                  />
+                  <input className={inputClass} value={item.color} onChange={(e) => update({ color: e.target.value })} />
+                </div>
+              </Field>
+            </div>
+          )}
+        />
       </section>
 
       <section>

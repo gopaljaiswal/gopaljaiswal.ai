@@ -28,6 +28,7 @@ export function OfferingsForm({ initial }: { initial: Offering[] }) {
           meta: [],
           ctaLabel: "",
           ctaHref: "",
+          emphasis: "primary",
         })}
         renderItem={(item, _i, update) => (
           <div className="space-y-3">
@@ -59,6 +60,16 @@ export function OfferingsForm({ initial }: { initial: Offering[] }) {
                 />
               </Field>
             </div>
+            <Field label="Visual weight">
+              <select
+                className={inputClass}
+                value={item.emphasis}
+                onChange={(e) => update({ emphasis: e.target.value as Offering["emphasis"] })}
+              >
+                <option value="primary">Primary (paid/mentorship)</option>
+                <option value="secondary">Secondary (free content)</option>
+              </select>
+            </Field>
             <Field label="Description">
               <textarea
                 className={textareaClass}
